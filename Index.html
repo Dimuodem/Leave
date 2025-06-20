@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leave Application Form</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, textarea, select {
+      width: 100%; padding: 8px; margin: 6px 0 12px; box-sizing: border-box;
+    }
+    label { font-weight: bold; }
+    .btn { background-color: #4CAF50; color: white; padding: 10px; border: none; cursor: pointer; }
+    .btn:hover { background-color: #45a049; }
+
+
+    .centered-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* Horizontally center */
+  justify-content: center; /* Vertically center if height allows */
+  text-align: center;
+  padding: 20px;
+}
+
+.centered-header img {
+  max-width: 150px;  /* Adjust size as needed */
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.centered-header h2,
+.centered-header h3 {
+  margin: 5px 0;
+}
+
+  </style>
+</head>
+<body>
+
+<div class="centered-header">
+  <img src="./systemPics/kenya-removebg-preview.png" alt="">
+  <h2>MINISTRY OF ICT AND THE EDIGITAL ECONOMY</h2>
+  <H2>STATE DEPARTMENT FOR ICT AND DIGITAL ECONOMY</H2>
+  <h3>LEAVE APPLICATION FOR THE HEADS OF DEPARTMENT</h3>
+</div>
+  <h4>The Principal Secretary</h4>
+  <p>State department for ICT and digital economy</p>
+  <hp>  P.O BOX 30025<p>
+  <p>NAIROBI</p>
+
+  <p>APPLICATION FOR ANNUAL LEAVE</p>
+  <P>(To be submited at least 30 days before the leave is due to begin)</P>
+
+  <h4>Part 1</h4>
+  <p>(To be filled by the applicant)</p>
+
+  <form id="leaveForm">
+    <label>Name:</label>
+    <input type="text" id="name" required>
+    
+    <label>P/No:</label>
+    <input type="text" id="pno" required>
+    
+    <label>Designation:</label>
+    <input type="text" id="designation" required>
+
+    <label>Days of Leave:</label>
+    <input type="number" id="days" required>
+
+    <label>Leave Start Date:</label>
+    <input type="date" id="start">
+
+    <label>Leave End Date:</label>
+    <input type="date" id="end">
+
+    <label>Last Leave Taken From:</label>
+    <input type="text" id="lastFrom">
+
+    <label>To:</label>
+    <input type="text" id="lastTo">
+
+    <label>Total Leave Days Balance:</label>
+    <input type="text" id="balance">
+
+    <label>Contact While on Leave:</label>
+    <textarea id="contact"></textarea>
+
+    <label>Phone:</label>
+    <input type="text" id="phone">
+
+    <label>Salary Payment Option:</label>
+    <select id="salaryOption">
+      <option value="bank">Bank Account</option>
+      <option value="address">Specific Address</option>
+    </select>
+
+    <label>Payment Address (if applicable):</label>
+    <input type="text" id="payAddress">
+
+    <label>Duties to be handled by:</label>
+    <input type="text" id="delegate">
+
+    <button class="btn" type="button" onclick="generatePDF()">Download Filled Form</button>
+  </form>
+
+  <script>
+  async function generatePDF()
+   {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Form values
+    const name = document.getElementById("name").value;
+    const pno = document.getElementById("pno").value;
+    const designation = document.getElementById("designation").value;
+    const days = document.getElementById("days").value;
+    const start = document.getElementById("start").value;
+    const end = document.getElementById("end").value;
+    const lastFrom = document.getElementById("lastFrom").value;
+    const lastTo = document.getElementById("lastTo").value;
+    const balance = document.getElementById("balance").value;
+    const contact = document.getElementById("contact").value;
+    const phone = document.getElementById("phone").value;
+    const salaryOption = document.getElementById("salaryOption").value;
+    const payAddress = document.getElementById("payAddress").value;
+    const delegate = document.getElementById("delegate").value;
+
+    let y = 10;
+
+    // Header - bold
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("REPUBLIC OF KENYA", 70, y); y += 8;
+    doc.setFontSize(12);
+    doc.text("MINISTRY OF INFORMATION, COMMUNICATIONS AND THE DIGITAL ECONOMY", 10, y); y += 7;
+    doc.text("STATE DEPARTMENT FOR ICT AND DIGITAL ECONOMY", 10, y); y += 7;
+    doc.text("LEAVE APPLICATION FORM FOR HEADS OF DEPARTMENTS", 10, y); y += 10;
+   
+    //Applicant Info
+    doc.setFont("helvetica", "normal");
+    doc.text("Name: ", 10, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(name, 30, y); y += 7;
+
+    doc.setFont("helvetica", "normal");
+    doc.text("P/No: ", 10, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(pno, 30, y);
+
+    doc.setFont("helvetica", "normal");
+    doc.text("Designation: ", 90, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(designation, 120, y); y += 7;
+
+    doc.setFont("helvetica", "normal");
+    doc.text("I hereby apply for ", 10, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(days + " days", 60, y);
+    doc.setFont("helvetica", "normal");
+    doc.text(" annual leave beginning on ", 85, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(start + " to " + end, 145, y); y += 7;
+
+    doc.setFont("helvetica", "normal");
+    doc.text("The last leave taken by me was from ", 10, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(lastFrom + " to " + lastTo, 85, y); y += 7;
+
+    doc.setFont("helvetica", "normal");
+    doc.text("Total leave days balance to date is: ", 10, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(balance + " days", 80, y); y += 10;
+
+    // Contact
+    doc.setFont("helvetica", "normal");
+    doc.text("While on leave, my contact will be:", 10, y); y += 7;
+    doc.text("Address: ", 10, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(contact, 35, y); y += 7;
+
+    doc.setFont("helvetica", "normal");
+    doc.text("Tel: ", 10, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(phone, 25, y); y += 10;
+
+    // Salary option
+    doc.setFont("helvetica", "normal");
+    doc.text("During the period of my leave salary should:", 10, y); y += 7;
+
+    if (salaryOption === "bank") {
+      doc.text("a) ", 10, y);
+      doc.setFont("helvetica", "bold");
+      doc.text("Continue to be paid into my bank account", 20, y); y += 7;
+    } else {
+      doc.text("b) ", 10, y);
+      doc.setFont("helvetica", "bold");
+      doc.text("Be paid at the following address: " + payAddress, 20, y); y += 7;
+    }
+
+    // Other notes
+    doc.setFont("helvetica", "normal");
+    doc.text("I understand I will require permission to spend leave outside Kenya.", 10, y); y += 7;
+
+    doc.text("While on leave, ", 10, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(delegate, 50, y);
+    doc.setFont("helvetica", "normal");
+    doc.text(" will handle duties of my office.", 70 + delegate.length * 2, y); y += 15;
+
+    // Sign section
+    doc.text("Date: ______________________     Signature: ______________________", 10, y); y += 15;
+
+    // PART II
+    doc.setFont("helvetica", "bold");
+    doc.text("PART II (For Principal Secretary)", 10, y); y += 7;
+
+    doc.setFont("helvetica", "normal");
+    doc.text("Approved / Not approved / Comments:", 10, y); y += 20;
+    doc.text("Date: ______________________     Signed: ______________________", 10, y); y += 10;
+    doc.setFont("helvetica", "bold");
+    doc.text("PRINCIPAL SECRETARY", 10, y);
+
+    doc.save("Leave_Application_Form.pdf");
+  }
+</script>
+
+</body>
+</html>
